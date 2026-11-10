@@ -1,10 +1,22 @@
-
+from pathlib import Path
 import streamlit as st
 import tensorflow as tf
 import numpy as np
 import json
 from PIL import Image
 
+BASE_DIR = Path(__file__).resolve().parent
+
+MODEL_PATH = BASE_DIR / "models" / "plant_disease_final_model.keras"
+
+if not MODEL_PATH.exists():
+    st.error(f"Model not found: {MODEL_PATH}")
+    st.stop()
+
+model = tf.keras.models.load_model(
+    str(MODEL_PATH),
+    compile=False
+)
 # ---------------- PAGE CONFIG ----------------
 
 st.set_page_config(
